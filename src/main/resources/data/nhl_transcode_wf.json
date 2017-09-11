@@ -1,0 +1,3060 @@
+{
+  "_class": "java.util.HashMap",
+  "id": "NHL_TRANSCODE_WORKFLOW",
+  "type": "MM_WORKFLOW",
+  "document": {
+    "_class": "net.mlbam.mm.workflow.types.Workflow",
+    "id": "NHL_TRANSCODE_WORKFLOW",
+    "casValue": 1497291536390160400,
+    "createdDate": [
+      "java.util.Date",
+      1497291411964
+    ],
+    "modifiedDate": [
+      "java.util.Date",
+      1497291630986
+    ],
+    "revisionId": "1497291630993",
+    "name": "Transcode",
+    "concurrencyType": "SEQUENTIAL",
+    "components": [
+      "java.util.ArrayList",
+      [
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.MediaInfoInstruction",
+          "name": "Media Info Validation",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.NhlMediaInfoMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "nhlMediaInfoHandler",
+          "config": null
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.DeliveryTypeInstruction",
+          "name": "Delivery Type Recognition",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": null,
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "nhlDeliveryTypeHandler",
+          "config": {
+            "_class": "net.mlbam.mm.workflow.impl.instruction.configs.DeliveryTypeConfig",
+            "priorityDeliveryKeywords": null,
+            "largeDeliveryKeywords": [
+              "java.util.HashSet",
+              [
+                {
+                  "_class": "net.mlbam.mm.workflow.impl.util.StringKeyValue",
+                  "key": "content",
+                  "value": "nhlTVArchive"
+                }
+              ]
+            ]
+          }
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.TranscodeInstruction",
+          "name": "Elemental Transcode",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.NhlTranscodeMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "elementalTranscodeHandler",
+          "config": {
+            "_class": "net.mlbam.mm.workflow.impl.instruction.configs.transcode.elemental.ElementalTranscodeConfig",
+            "standardJobQueue": null,
+            "largeJobQueue": null,
+            "priorityJobQueue": null,
+            "outputBaseDir": "/var/tmp/media_transitional/transcode",
+            "outputPathExpression": "/$mediaType/nhl/$DATEFORMATUTIL.format($currentDate,\"yyyy/MM/dd\")/$assetId/$currentMillis/asset",
+            "transcodePaddingConfig": null,
+            "transcodeJobType": null,
+            "targetTranscodeOutputGroups": [
+              "java.util.ArrayList",
+              [
+                "HLS",
+                "MP4"
+              ]
+            ],
+            "enableCaption": true,
+            "mediaBall4Enabled": false,
+            "transcodeProfileDescriptor": {
+              "_class": "net.mlbam.mm.workflow.impl.instruction.configs.transcode.elemental.profile.TranscodeProfileDescriptor",
+              "outputGroupDescriptors": [
+                "java.util.LinkedList",
+                [
+                  {
+                    "_class": "net.mlbam.mm.workflow.impl.instruction.configs.transcode.elemental.profile.OutputGroupDescriptor",
+                    "index": 0,
+                    "type": "HLS",
+                    "streamAssemblyIndices": null
+                  },
+                  {
+                    "_class": "net.mlbam.mm.workflow.impl.instruction.configs.transcode.elemental.profile.OutputGroupDescriptor",
+                    "index": 1,
+                    "type": "MP4",
+                    "streamAssemblyIndices": null
+                  }
+                ]
+              ],
+              "inputDescriptor": null
+            },
+            "frameSizeToProfile": [
+              "java.util.ArrayList",
+              [
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": {
+                    "_class": "net.mlbam.mm.workflow.types.instruction.handlers.transcode.FrameSizeInfo",
+                    "frameWidth": "1280",
+                    "frameHeight": "720"
+                  },
+                  "value": "NHL_ALL"
+                },
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": {
+                    "_class": "net.mlbam.mm.workflow.types.instruction.handlers.transcode.FrameSizeInfo",
+                    "frameWidth": "780",
+                    "frameHeight": "480"
+                  },
+                  "value": "NHL_ALL"
+                },
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": {
+                    "_class": "net.mlbam.mm.workflow.types.instruction.handlers.transcode.FrameSizeInfo",
+                    "frameWidth": "960",
+                    "frameHeight": "720"
+                  },
+                  "value": "NHL_ALL"
+                }
+              ]
+            ],
+            "aspectRatioBasedProfile": false,
+            "frameSizeToVideoResolution": [
+              "java.util.ArrayList",
+              [
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": {
+                    "_class": "net.mlbam.mm.workflow.types.instruction.handlers.transcode.FrameSizeInfo",
+                    "frameWidth": "1280",
+                    "frameHeight": "720"
+                  },
+                  "value": "_1280x720"
+                },
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": {
+                    "_class": "net.mlbam.mm.workflow.types.instruction.handlers.transcode.FrameSizeInfo",
+                    "frameWidth": "780",
+                    "frameHeight": "480"
+                  },
+                  "value": "_740x480"
+                },
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": {
+                    "_class": "net.mlbam.mm.workflow.types.instruction.handlers.transcode.FrameSizeInfo",
+                    "frameWidth": "960",
+                    "frameHeight": "720"
+                  },
+                  "value": "_960x720"
+                }
+              ]
+            ],
+            "frameRateToGopSize": null,
+            "audioTrackOverwritable": null,
+            "captionOnlyStreamAssemblyIndices": [
+              "java.util.HashSet",
+              [
+                8
+              ]
+            ],
+            "iframeSuffix": "_I-Frame.m3u8",
+            "inputUsername": null,
+            "inputPassword": null,
+            "outputUsername": null,
+            "outputPassword": null,
+            "elementalClientType": "ELEMENTAL_TRANSCODE_CLIENT"
+          }
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.AssetRenditionInstruction",
+          "name": "Create Hls Renditions",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.assetRendition.NhlHlsTranscodeRenditionMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "nhlRenditionUpdateHandler"
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.HlsEncryptionInstruction",
+          "name": "Hls Encryption",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            [
+              "nhlHlsEncryptionInstructionInterceptor"
+            ]
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.NhlHlsEncryptionMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "hlsEncryptionHandler",
+          "config": {
+            "_class": "net.mlbam.mm.workflow.impl.instruction.configs.encryption.hls.HlsEncryptionConfig",
+            "inputBasePath": "/var/tmp/media_transitional/transcode",
+            "outputBasePath": "/var/tmp/media_transitional/encrypt",
+            "encryptionConfig": {
+              "_class": "net.mlbam.mm.workflow.impl.instruction.configs.encryption.hls.HlsEncryptionConfig$EncryptionConfig",
+              "keyRotation": null,
+              "ivRotation": null,
+              "keysToGenerate": 1,
+              "mediaServiceUriExpression": "https://mf.qa.nhl.com/ws/media/mf/v2.3/key/silk/mediaid/${mediaId}/kid/${kid}",
+              "drmType": null,
+              "encryptionStoreMode": null
+            }
+          }
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.AssetRenditionInstruction",
+          "name": "Update Hls Encryption Renditions",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            [
+              "nhlHlsEncryptionInstructionInterceptor"
+            ]
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.assetRendition.NhlHlsEncryptionRenditionMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap",
+              "NhlHlsEncryptionRenditionMapper.base_pre_encryption_output": "/var/tmp/media_transitional/transcode",
+              "NhlHlsEncryptionRenditionMapper.base_encryption_output": "/var/tmp/media_transitional/encrypt"
+            }
+          },
+          "handlerBeanName": "nhlRenditionUpdateHandler"
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.MultiOriginFileDeployInstruction",
+          "name": "Hls Files Deploy",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.deploy.NhlHlsFileDeployMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "multiOriginFileDeployHandler",
+          "config": {
+            "_class": "net.mlbam.mm.workflow.impl.instruction.configs.MultiOriginFileDeployConfig",
+            "deploymentStrategies": {
+              "_class": "java.util.HashMap",
+              "s3": {
+                "_class": "net.mlbam.mm.workflow.impl.instruction.configs.deploy.s3.S3FileDeploymentStrategy",
+                "bucketName": "mmdev-nhl-vod-local",
+                "jmS3CredentialId": "NHL",
+                "cacheControl": ""
+              },
+              "adm1": {
+                "_class": "net.mlbam.mm.workflow.impl.instruction.configs.deploy.aspera.AsperaFileDeploymentStrategy",
+                "asperaHost": null,
+                "asperaHosts": [
+                  "mmqa03.mm3.mlbam.com"
+                ],
+                "asperaUser": "qaasp1",
+                "asperaCertPath": "/opt/aspera/bin/id_dsa_qa",
+                "asperaCertPass": "pr3ssb0x",
+                "xferType": "UPLOAD",
+                "maxKbps": 15000,
+                "sourceBase": "/mmqastorefs01/data/asperadrop/qaasp1",
+                "tcpPort": null,
+                "udpPort": null
+              }
+            },
+            "cdnOrigins": [
+              "java.util.ArrayList",
+              [
+                {
+                  "_class": "net.mlbam.mm.workflow.types.deploy.CdnOrigin",
+                  "origin": {
+                    "_class": "com.mlbam.mm.commons.types.util.Origin",
+                    "value": "adm1"
+                  },
+                  "baseDir": "/var/tmp/media/repository",
+                  "cdnUrlConfigs": [
+                    "java.util.ArrayList",
+                    [
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "AKAMAI"
+                        },
+                        "cdnBaseUrl": "http://akamai.com/media"
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "LIMELIGHT"
+                        },
+                        "cdnBaseUrl": "http://limelight.com/media"
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "LEVEL3"
+                        },
+                        "cdnBaseUrl": "http://level3.com/media"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.AssetRenditionInstruction",
+          "name": "Update Hls Deployed Renditions",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.assetRendition.NhlHlsFileDeployRenditionMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "nhlRenditionUpdateHandler"
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.M3u8MasterCreateInstruction",
+          "name": "Create Master M3U8",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.NhlM3u8MasterCreateMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "m3u8MasterCreateHandler",
+          "config": {
+            "_class": "net.mlbam.mm.workflow.impl.instruction.configs.M3u8MasterCreatorConfig",
+            "playbackScenarios": [
+              "java.util.ArrayList",
+              [
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": {
+                    "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterType",
+                    "videoResolutionType": "_1280x720",
+                    "masterPlaylistDrmType": "NONE"
+                  },
+                  "value": [
+                    "java.util.ArrayList",
+                    [
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_MOBILE",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "192k",
+                              "bandwidth": "267000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "320x180",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "450k",
+                          "bandwidth": "600000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.42c01e",
+                          "resolution": "400x224",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_TABLET",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "192k",
+                              "bandwidth": "267000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "320x180",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_TABLET_60",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "192k",
+                              "bandwidth": "267000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "320x180",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "5000k",
+                              "bandwidth": "6200000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.64002a",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": "59.94",
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_WIRED_WEB",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_WIRED",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_WIRED_60",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "5000k",
+                              "bandwidth": "6200000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.64002a",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": "59.94",
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": {
+                    "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterType",
+                    "videoResolutionType": "_740x480",
+                    "masterPlaylistDrmType": "NONE"
+                  },
+                  "value": [
+                    "java.util.ArrayList",
+                    [
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_MOBILE",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "192k",
+                              "bandwidth": "267000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "320x180",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "450k",
+                          "bandwidth": "600000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.42c01e",
+                          "resolution": "400x224",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_TABLET",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "192k",
+                              "bandwidth": "267000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "320x180",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_TABLET_60",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "192k",
+                              "bandwidth": "267000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "320x180",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "5000k",
+                              "bandwidth": "6200000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.64002a",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": "59.94",
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_WIRED_WEB",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_WIRED",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_WIRED_60",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "5000k",
+                              "bandwidth": "6200000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.64002a",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": "59.94",
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": {
+                    "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterType",
+                    "videoResolutionType": "_960x720",
+                    "masterPlaylistDrmType": "NONE"
+                  },
+                  "value": [
+                    "java.util.ArrayList",
+                    [
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_MOBILE",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "192k",
+                              "bandwidth": "267000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "320x180",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "450k",
+                          "bandwidth": "600000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.42c01e",
+                          "resolution": "400x224",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_TABLET",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "192k",
+                              "bandwidth": "267000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "320x180",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_TABLET_60",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "192k",
+                              "bandwidth": "267000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "320x180",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "5000k",
+                              "bandwidth": "6200000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.64002a",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": "59.94",
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_WIRED_WEB",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_WIRED",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.m3u8.handler.M3u8MasterPlaybackScenario",
+                        "playbackScenarioType": "HTTP_CLOUD_WIRED_60",
+                        "playlistDrmType": "NONE",
+                        "playlistEncryptionStoreMode": null,
+                        "bitRates": [
+                          "java.util.ArrayList",
+                          [
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterAudioHlsBitrate",
+                              "bitrateLabel": null,
+                              "bandwidth": null,
+                              "averageBandwidth": null,
+                              "codec": "mp4a.40.2",
+                              "builtInAudio": true,
+                              "groupId": "aac",
+                              "defaultAudio": false,
+                              "name": null
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "600000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "450k",
+                              "bandwidth": "56800",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "400x224",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "800k",
+                              "bandwidth": "1020000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.42c01e",
+                              "resolution": "512x288",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1200k",
+                              "bandwidth": "1560000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "640x360",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "1800k",
+                              "bandwidth": "2270000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "896x504",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "3140000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "2500k",
+                              "bandwidth": "333000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.4d001f",
+                              "resolution": "960x540",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": true
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "3500k",
+                              "bandwidth": "4235000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.640029",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": null,
+                              "iframe": false
+                            },
+                            {
+                              "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                              "bitrateLabel": "5000k",
+                              "bandwidth": "6200000",
+                              "averageBandwidth": null,
+                              "codec": "avc1.64002a",
+                              "resolution": "1280x720",
+                              "audioGroupId": null,
+                              "frameRate": "59.94",
+                              "iframe": false
+                            }
+                          ]
+                        ],
+                        "defaultBitRate": {
+                          "_class": "net.mlbam.mm.workflow.types.m3u8.M3u8MasterVideoHlsBitrate",
+                          "bitrateLabel": "1800k",
+                          "bandwidth": "2270000",
+                          "averageBandwidth": null,
+                          "codec": "avc1.4d001f",
+                          "resolution": "896x504",
+                          "audioGroupId": null,
+                          "frameRate": null,
+                          "iframe": false
+                        }
+                      }
+                    ]
+                  ]
+                }
+              ]
+            ],
+            "isPlaylistSiblingToBitRateDirList": [
+              "java.util.ArrayList",
+              [
+                {
+                  "_class": "org.apache.commons.collections4.keyvalue.DefaultKeyValue",
+                  "key": "NONE",
+                  "value": true
+                }
+              ]
+            ]
+          }
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.MultiOriginFileDeployInstruction",
+          "name": "Master M3u8 Deploy",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.NhlM3u8MasterDeployMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "multiOriginFileDeployHandler",
+          "config": {
+            "_class": "net.mlbam.mm.workflow.impl.instruction.configs.MultiOriginFileDeployConfig",
+            "deploymentStrategies": {
+              "_class": "java.util.HashMap",
+              "s3": {
+                "_class": "net.mlbam.mm.workflow.impl.instruction.configs.deploy.s3.S3FileDeploymentStrategy",
+                "bucketName": "mmdev-nhl-vod-local",
+                "jmS3CredentialId": "NHL",
+                "cacheControl": ""
+              },
+              "adm1": {
+                "_class": "net.mlbam.mm.workflow.impl.instruction.configs.deploy.aspera.AsperaFileDeploymentStrategy",
+                "asperaHost": null,
+                "asperaHosts": [
+                  "mmqa03.mm3.mlbam.com"
+                ],
+                "asperaUser": "qaasp1",
+                "asperaCertPath": "/opt/aspera/bin/id_dsa_qa",
+                "asperaCertPass": "pr3ssb0x",
+                "xferType": "UPLOAD",
+                "maxKbps": 15000,
+                "sourceBase": "/mmqastorefs01/data/asperadrop/qaasp1",
+                "tcpPort": null,
+                "udpPort": null
+              }
+            },
+            "cdnOrigins": [
+              "java.util.ArrayList",
+              [
+                {
+                  "_class": "net.mlbam.mm.workflow.types.deploy.CdnOrigin",
+                  "origin": {
+                    "_class": "com.mlbam.mm.commons.types.util.Origin",
+                    "value": "adm1"
+                  },
+                  "baseDir": "/var/tmp/media/repository",
+                  "cdnUrlConfigs": [
+                    "java.util.ArrayList",
+                    [
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "AKAMAI"
+                        },
+                        "cdnBaseUrl": "http://akamai.com/media"
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "LIMELIGHT"
+                        },
+                        "cdnBaseUrl": "http://limelight.com/media"
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "LEVEL3"
+                        },
+                        "cdnBaseUrl": "http://level3.com/media"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.AssetRenditionInstruction",
+          "name": "Master M3u8 Asset Rendition",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.assetRendition.NhlM3u8MasterAssetRenditionMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "nhlRenditionUpdateHandler"
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.AssetRenditionInstruction",
+          "name": "Create Mp4 Renditions",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.assetRendition.NhlMp4TranscodeRenditionMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap",
+              "mp4RenditionMapper.mp4BitrateToPlaybackScenarioMap": {
+                "_class": "java.util.HashMap",
+                "1200k": "FLASH_1200K_640X360",
+                "450k": "FLASH_450K_400X224",
+                "192k": "FLASH_192K_320X180",
+                "1800k": "FLASH_1800K_960X540"
+              }
+            }
+          },
+          "handlerBeanName": "nhlRenditionUpdateHandler"
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.MultiOriginFileDeployInstruction",
+          "name": "Mp4 Files Deploy",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.deploy.NhlMp4FileDeployMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap",
+              "nhlMp4FileDeployMapper.excludeBitrates": [
+                "java.util.ArrayList",
+                [
+                  "1200k",
+                  "1800k"
+                ]
+              ]
+            }
+          },
+          "handlerBeanName": "multiOriginFileDeployHandler",
+          "config": {
+            "_class": "net.mlbam.mm.workflow.impl.instruction.configs.MultiOriginFileDeployConfig",
+            "deploymentStrategies": {
+              "_class": "java.util.HashMap",
+              "s3": {
+                "_class": "net.mlbam.mm.workflow.impl.instruction.configs.deploy.s3.S3FileDeploymentStrategy",
+                "bucketName": "mmdev-nhl-vod-local",
+                "jmS3CredentialId": "NHL",
+                "cacheControl": ""
+              },
+              "adm1": {
+                "_class": "net.mlbam.mm.workflow.impl.instruction.configs.deploy.aspera.AsperaFileDeploymentStrategy",
+                "asperaHost": null,
+                "asperaHosts": [
+                  "mmqa03.mm3.mlbam.com"
+                ],
+                "asperaUser": "qaasp1",
+                "asperaCertPath": "/opt/aspera/bin/id_dsa_qa",
+                "asperaCertPass": "pr3ssb0x",
+                "xferType": "UPLOAD",
+                "maxKbps": 15000,
+                "sourceBase": "/mmqastorefs01/data/asperadrop/qaasp1",
+                "tcpPort": null,
+                "udpPort": null
+              }
+            },
+            "cdnOrigins": [
+              "java.util.ArrayList",
+              [
+                {
+                  "_class": "net.mlbam.mm.workflow.types.deploy.CdnOrigin",
+                  "origin": {
+                    "_class": "com.mlbam.mm.commons.types.util.Origin",
+                    "value": "adm1"
+                  },
+                  "baseDir": "/var/tmp/media/repository",
+                  "cdnUrlConfigs": [
+                    "java.util.ArrayList",
+                    [
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "AKAMAI"
+                        },
+                        "cdnBaseUrl": "http://akamai.com/media"
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "LIMELIGHT"
+                        },
+                        "cdnBaseUrl": "http://limelight.com/media"
+                      },
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "LEVEL3"
+                        },
+                        "cdnBaseUrl": "http://level3.com/media"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.AssetRenditionInstruction",
+          "name": "Update Mp4 Deployed Renditions",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.assetRendition.NhlMp4FileDeployRenditionMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap",
+              "mp4RenditionMapper.mp4BitrateToPlaybackScenarioMap": {
+                "_class": "java.util.HashMap",
+                "1200k": "FLASH_1200K_640X360",
+                "450k": "FLASH_450K_400X224",
+                "192k": "FLASH_192K_320X180",
+                "1800k": "FLASH_1800K_960X540"
+              }
+            }
+          },
+          "handlerBeanName": "nhlRenditionUpdateHandler"
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.AssetRenditionInstruction",
+          "name": "Create Hls Proxy Rendition",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.assetRendition.NhlHlsProxyTranscodeRenditionMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "nhlRenditionUpdateHandler"
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.MultiOriginFileDeployInstruction",
+          "name": "HLS Proxy Deploy",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.NhlHlsProxyDeployMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "multiOriginFileDeployHandler",
+          "config": {
+            "_class": "net.mlbam.mm.workflow.impl.instruction.configs.MultiOriginFileDeployConfig",
+            "deploymentStrategies": {
+              "_class": "java.util.HashMap",
+              "s3": {
+                "_class": "net.mlbam.mm.workflow.impl.instruction.configs.deploy.s3.S3FileDeploymentStrategy",
+                "bucketName": "mmdev-nhl-vod-local",
+                "jmS3CredentialId": "NHL",
+                "cacheControl": ""
+              }
+            },
+            "cdnOrigins": [
+              "java.util.ArrayList",
+              [
+                {
+                  "_class": "net.mlbam.mm.workflow.types.deploy.S3CdnOrigin",
+                  "origin": {
+                    "_class": "com.mlbam.mm.commons.types.util.Origin",
+                    "value": "s3"
+                  },
+                  "baseDir": "media",
+                  "cdnUrlConfigs": [
+                    "java.util.ArrayList",
+                    [
+                      {
+                        "_class": "net.mlbam.mm.workflow.types.deploy.CdnUrlConfig",
+                        "cdn": {
+                          "_class": "com.mlbam.mm.commons.types.util.Cdn",
+                          "value": "AWS_S3"
+                        },
+                        "cdnBaseUrl": "http://mmdev-nhl-vod-local.s3-website-us-east-1.amazonaws.com"
+                      }
+                    ]
+                  ],
+                  "bucket": "mmdev-nhl-vod-local",
+                  "credentialReferenceId": "NHL"
+                }
+              ]
+            ]
+          }
+        },
+        {
+          "_class": "net.mlbam.mm.workflow.impl.instructions.AssetRenditionInstruction",
+          "name": "Update Hls Proxy Deployed Rendition",
+          "interceptorBeanNames": [
+            "java.util.ArrayList",
+            []
+          ],
+          "executionParametersMapper": {
+            "_class": "net.mlbam.mm.workflow.impl.instance.nhl.instruction.mappers.assetRendition.NhlHlsProxyMediaRenditionMapper"
+          },
+          "parameters": {
+            "_class": "net.mlbam.mm.workflow.types.param.InputParameters",
+            "parameters": {
+              "_class": "java.util.LinkedHashMap"
+            }
+          },
+          "handlerBeanName": "nhlRenditionUpdateHandler"
+        }
+      ]
+    ],
+    "interceptorBeanNames": [
+      "java.util.ArrayList",
+      [
+        "nhlAssetOriginWorkflowExecutionInterceptor"
+      ]
+    ],
+    "parameters": null
+  }
+}

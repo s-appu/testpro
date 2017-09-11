@@ -1,0 +1,14 @@
+CREATE SCHEMA IF NOT EXISTS `my_db_core`;
+GRANT ALL ON my_db_core.* TO 'my_db_core'@'localhost' IDENTIFIED BY 'my_db_core';
+
+use my_db_core;
+
+DROP TABLE IF EXISTS ALL_ORDER;
+
+CREATE TABLE ALL_ORDER(
+order_id VARCHAR(200) NOT NULL,
+order_name VARCHAR(200) NOT NULL UNIQUE,
+product VARCHAR(200) NOT NULL,
+created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+modified_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)
+engine=InnoDB;
