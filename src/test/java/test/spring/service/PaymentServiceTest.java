@@ -25,4 +25,10 @@ public class PaymentServiceTest {
         Assert.assertNotNull( cost );
         Assert.assertEquals( 1000, cost );
     }
+
+    @Test
+    public void testAspects() {
+        final double cost = this.paymentService.totalCost();
+        Assert.assertNotNull( cost );
+    }
 }
